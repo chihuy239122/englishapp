@@ -17,12 +17,31 @@ describe("API Client", () => {
       userId: "user_1",
       persona: "conversation_partner",
       level: "beginner",
+      moduleId: "module_daily",
+      lessonId: "lesson_greetings",
+      phraseId: "phrase_1",
     });
 
     expect(res.sessionId).toBe("sess_abc123");
     expect(global.fetch).toHaveBeenCalledWith("/api/sessions", expect.objectContaining({
       method: "POST",
     }));
+    expect(JSON.parse((global.fetch as any).mock.calls[0][1].body)).toMatchObject({
+      moduleId: "module_daily",
+      lessonId: "lesson_greetings",
+      phraseId: "phrase_1",
+    });
+  });
+
+  it("loads curriculum and learner progress", async () => {
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ modules: [] }) } as Response)
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ userId: "user_1", modules: [] }) } as Response);
+
+    await expect(apiClient.getCurriculum()).resolves.toEqual({ modules: [] });
+    await expect(apiClient.getUserProgress("user_1")).resolves.toEqual({ userId: "user_1", modules: [] });
+    expect(global.fetch).toHaveBeenNthCalledWith(1, "/api/content/curriculum");
+    expect(global.fetch).toHaveBeenNthCalledWith(2, "/api/users/user_1/progress");
   });
 
   it("should transcribe audio (Stage 2a)", async () => {

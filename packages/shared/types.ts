@@ -14,6 +14,7 @@ export interface TurnResponse {
   corrections: Correction[];
   audioBase64: string;
   audioAvailable: boolean;
+  phraseId?: string;
 }
 
 export interface TranscribeResponse {
@@ -60,4 +61,75 @@ export interface SessionInfo {
   persona: Persona;
   level: Level;
   startedAt: number;
+  moduleId?: string;
+  lessonId?: string;
+  phraseId?: string;
+}
+
+export interface CurriculumVocabulary {
+  id: string;
+  word: string;
+  ipa: string;
+  meaning: string;
+  example: string;
+}
+
+export interface CurriculumPhrase {
+  id: string;
+  english: string;
+  vietnameseHint: string;
+  phoneticHint?: string;
+  audioTip?: string;
+  focusGrammar?: string;
+  phraseOrder: number;
+}
+
+export interface CurriculumLesson {
+  id: string;
+  moduleId: string;
+  title: string;
+  description: string;
+  lessonOrder: number;
+  requiredPhraseCount: number;
+  phrases: CurriculumPhrase[];
+  vocabulary: CurriculumVocabulary[];
+}
+
+export interface CurriculumModule {
+  id: string;
+  title: string;
+  levelMin: string;
+  levelMax: string;
+  description: string;
+  icon: string;
+  moduleOrder: number;
+  lessons: CurriculumLesson[];
+}
+
+export interface CurriculumResponse {
+  modules: CurriculumModule[];
+}
+
+export interface LessonProgress {
+  lessonId: string;
+  title: string;
+  lessonOrder: number;
+  totalPhrases: number;
+  practicedPhrases: number;
+  masteredPhrases: number;
+  practiceCount: number;
+  completionPercent: number;
+  unlocked: boolean;
+}
+
+export interface ModuleProgress {
+  moduleId: string;
+  title: string;
+  lessons: LessonProgress[];
+  completionPercent: number;
+}
+
+export interface UserProgressResponse {
+  userId: string;
+  modules: ModuleProgress[];
 }

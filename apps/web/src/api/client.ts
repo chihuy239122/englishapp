@@ -5,6 +5,9 @@ import {
   TurnResponse,
   CompleteTurnRequest,
   UserStatsResponse,
+  CurriculumResponse,
+  UserProgressResponse,
+  LevelsResponse,
   ApiErrorEnvelope,
   ApiErrorDetail,
 } from "../types";
@@ -58,10 +61,16 @@ export interface CreateSessionParams {
   userId: string;
   persona: Persona;
   level: Level;
+  moduleId?: string;
+  lessonId?: string;
+  phraseId?: string;
 }
 
 export interface CreateSessionResponse {
   sessionId: string;
+  moduleId?: string | null;
+  lessonId?: string | null;
+  phraseId?: string | null;
 }
 
 /**
@@ -120,5 +129,20 @@ export const apiClient = {
   async getUserStats(userId: string): Promise<UserStatsResponse> {
     const res = await fetch(`/api/users/${encodeURIComponent(userId)}/stats`);
     return handleResponse<UserStatsResponse>(res);
+  },
+
+  async getCurriculum(): Promise<CurriculumResponse> {
+    const res = await fetch("/api/content/curriculum");
+    return handleResponse<CurriculumResponse>(res);
+  },
+
+  async getLevels(): Promise<LevelsResponse> {
+    const res = await fetch("/api/content/levels");
+    return handleResponse<LevelsResponse>(res);
+  },
+
+  async getUserProgress(userId: string): Promise<UserProgressResponse> {
+    const res = await fetch(`/api/users/${encodeURIComponent(userId)}/progress`);
+    return handleResponse<UserProgressResponse>(res);
   },
 };

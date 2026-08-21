@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Persona, Level, SessionInfo } from "./types";
 import { apiClient } from "./api/client";
 import { Header } from "./components/Header";
-import { StartScreen } from "./components/StartScreen";
+import { SessionLearningContext, StartScreen } from "./components/StartScreen";
 import { PracticeWorkspace } from "./components/PracticeWorkspace";
 import { StatsView } from "./components/StatsView";
 
@@ -14,7 +14,7 @@ export const App: React.FC = () => {
   const [isStartingSession, setIsStartingSession] = useState<boolean>(false);
   const [appError, setAppError] = useState<string | null>(null);
 
-  const handleStartSession = async (persona: Persona, level: Level) => {
+  const handleStartSession = async (persona: Persona, level: Level, learningContext?: SessionLearningContext) => {
     setIsStartingSession(true);
     setAppError(null);
 
@@ -23,6 +23,9 @@ export const App: React.FC = () => {
         userId: DEFAULT_USER_ID,
         persona,
         level,
+        ...(learningContext?.moduleId ? { moduleId: learningContext.moduleId } : {}),
+        ...(learningContext?.lessonId ? { lessonId: learningContext.lessonId } : {}),
+        ...(learningContext?.phraseId ? { phraseId: learningContext.phraseId } : {}),
       });
 
       setCurrentSession({
@@ -31,6 +34,11 @@ export const App: React.FC = () => {
         persona,
         level,
         startedAt: Date.now(),
+        moduleId: learningContext?.moduleId,
+        lessonId: learningContext?.lessonId,
+        phraseId: learningContext?.phraseId,
+        lessonTitle: learningContext?.lessonTitle,
+        targetPhrase: learningContext?.targetPhrase,
       });
     } catch (err: any) {
       console.error("Failed to create session:", err);
@@ -72,6 +80,8 @@ export const App: React.FC = () => {
           persona={currentSession.persona}
           level={currentSession.level}
           userId={currentSession.userId}
+          lessonTitle={currentSession.lessonTitle}
+          targetPhrase={currentSession.targetPhrase}
         />
       ) : (
         <StartScreen

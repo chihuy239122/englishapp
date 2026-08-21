@@ -19,6 +19,21 @@ export const App: React.FC = () => {
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [isLoadingSession, setIsLoadingSession] = useState<boolean>(false);
   const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
+  const [selectedPhrase, setSelectedPhrase] = useState<SamplePhrase | null>(null);
+
+  const getModuleId = (topicId: string | undefined) => topicId
+    ?.replace("topic_daily_open", "module_daily")
+    .replace("topic_pronunciation_cc0", "module_pronunciation")
+    .replace("topic_grammar_open", "module_grammar")
+    .replace("topic_fluency_open", "module_fluency");
+
+  const getLessonId = (moduleId: string | undefined) => {
+    if (moduleId === "module_pronunciation") return "lesson_pron_01";
+    if (moduleId === "module_grammar") return "lesson_grammar_01";
+    if (moduleId === "module_fluency") return "lesson_fluency_01";
+    if (moduleId === "module_daily") return "lesson_daily_01";
+    return undefined;
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -31,6 +46,7 @@ export const App: React.FC = () => {
           if (firstTopic) {
             setSelectedPersona(firstTopic.targetPersona);
             setSelectedLevel(firstTopic.defaultLevel);
+            setSelectedPhrase(firstTopic.phrases[0] ?? null);
           }
         }
       })
@@ -44,20 +60,25 @@ export const App: React.FC = () => {
     setSelectedTopic(topic);
     setSelectedPersona(topic.targetPersona);
     setSelectedLevel(topic.defaultLevel);
+    setSelectedPhrase(topic.phrases[0] ?? null);
     setNoticeMessage(
       `Đã chọn chủ đề "${topic.title}". Persona AI tự động thiết lập: ${topic.targetPersona}, trình độ: ${topic.defaultLevel}`
     );
   };
 
-  const handleCreateSession = async () => {
+  const handleCreateSession = async (phraseOverride?: SamplePhrase) => {
     setIsLoadingSession(true);
     setNoticeMessage(null);
 
     try {
+      const moduleId = getModuleId(selectedTopic?.id);
+      const phrase = phraseOverride ?? selectedPhrase;
       const res = await ispeakerClient.createSession({
         userId: DEFAULT_USER_ID,
         persona: selectedPersona,
         level: selectedLevel,
+        ...(moduleId ? { moduleId, lessonId: getLessonId(moduleId) } : {}),
+        ...(phrase ? { phraseId: phrase.id } : {}),
       });
 
       setActiveSessionId(res.sessionId);
@@ -72,8 +93,9 @@ export const App: React.FC = () => {
   };
 
   const handleStartSessionWithPhrase = (phrase: SamplePhrase) => {
+    setSelectedPhrase(phrase);
     setNoticeMessage(`Bắt đầu bài luyện cho câu: "${phrase.english}"`);
-    handleCreateSession();
+    handleCreateSession(phrase);
   };
 
   return (
@@ -127,6 +149,7 @@ export const App: React.FC = () => {
             activeSessionId={activeSessionId}
             onLaunchSession={handleCreateSession}
             isLoadingSession={isLoadingSession}
+            selectedPhrase={selectedPhrase}
           />
         )}
       </main>

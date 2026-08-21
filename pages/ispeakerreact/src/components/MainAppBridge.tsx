@@ -1,5 +1,5 @@
 import React from "react";
-import { Topic, Persona, Level } from "../types";
+import { Topic, Persona, Level, SamplePhrase } from "../types";
 
 interface MainAppBridgeProps {
   selectedTopic: Topic | null;
@@ -8,6 +8,7 @@ interface MainAppBridgeProps {
   activeSessionId: string | null;
   onLaunchSession: () => void;
   isLoadingSession: boolean;
+  selectedPhrase: SamplePhrase | null;
 }
 
 export const MainAppBridge: React.FC<MainAppBridgeProps> = ({
@@ -17,6 +18,7 @@ export const MainAppBridge: React.FC<MainAppBridgeProps> = ({
   activeSessionId,
   onLaunchSession,
   isLoadingSession,
+  selectedPhrase,
 }) => {
   const getPersonaLabel = (p: Persona) => {
     switch (p) {
@@ -34,6 +36,16 @@ export const MainAppBridge: React.FC<MainAppBridgeProps> = ({
       case "advanced": return "Nâng cao (Advanced)";
     }
   };
+
+  const moduleId = selectedTopic?.id.replace("topic_daily_open", "module_daily").replace("topic_pronunciation_cc0", "module_pronunciation").replace("topic_grammar_open", "module_grammar").replace("topic_fluency_open", "module_fluency");
+  const mainAppBaseUrl = ((import.meta as ImportMeta & { env?: { VITE_MAIN_APP_URL?: string } }).env?.VITE_MAIN_APP_URL || "https://english-app-api.chihuy239122.workers.dev").replace(/\/$/, "");
+  const mainAppUrl = new URL(mainAppBaseUrl);
+  if (moduleId) mainAppUrl.searchParams.set("moduleId", moduleId);
+  if (selectedPhrase) mainAppUrl.searchParams.set("phraseId", selectedPhrase.id);
+  if (selectedPhrase && selectedTopic) {
+    const lessonId = moduleId === "module_pronunciation" ? "lesson_pron_01" : moduleId ? `${moduleId.replace("module_", "lesson_")}_01` : "";
+    if (lessonId) mainAppUrl.searchParams.set("lessonId", lessonId);
+  }
 
   return (
     <section className="main-app-bridge-section" aria-labelledby="bridge-heading">
@@ -54,6 +66,8 @@ export const MainAppBridge: React.FC<MainAppBridgeProps> = ({
               {selectedTopic ? selectedTopic.title : "Tự do chọn chủ đề"}
             </span>
           </div>
+
+          {selectedPhrase && <div className="summary-item summary-item-wide"><span className="summary-label">Câu mục tiêu:</span><span className="summary-value highlight">{selectedPhrase.english}</span></div>}
 
           <div className="summary-item">
             <span className="summary-label">Persona AI chỉ định:</span>
@@ -100,7 +114,7 @@ export const MainAppBridge: React.FC<MainAppBridgeProps> = ({
                 🎉 Session <strong>{activeSessionId}</strong> đã sẵn sàng! Bạn có thể luyện tập ngay bên dưới hoặc mở ứng dụng chính.
               </p>
               <a
-                href="/"
+                href={mainAppUrl.toString()}
                 className="launch-link-btn"
                 title="Mở ứng dụng chính English AI Tutor"
               >

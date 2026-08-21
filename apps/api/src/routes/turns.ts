@@ -64,13 +64,16 @@ turnRoutes.post("/api/sessions/:id/turns", async (c) => {
     const turnId = newId();
     const turnIndex = await nextTurnIndex(c.env.DB, session.id);
     const createdAt = nowSeconds();
-    const insert = c.env.DB.prepare("INSERT INTO turns (id, session_id, client_turn_id, turn_index, transcript, ai_reply, corrections, audio_base64, audio_available, user_audio_key, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").bind(
-      turnId, session.id, clientTurnId, turnIndex, transcript, aiResult.reply, JSON.stringify(aiResult.corrections), audioBase64, audioAvailable ? 1 : 0, tokenData.user_audio_key || null, createdAt,
+    const insert = c.env.DB.prepare("INSERT INTO turns (id, session_id, client_turn_id, turn_index, transcript, ai_reply, corrections, audio_base64, audio_available, user_audio_key, phrase_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").bind(
+      turnId, session.id, clientTurnId, turnIndex, transcript, aiResult.reply, JSON.stringify(aiResult.corrections), audioBase64, audioAvailable ? 1 : 0, tokenData.user_audio_key || null, session.phrase_id || null, createdAt,
     );
     const consume = c.env.DB.prepare("UPDATE turn_tokens SET used_at = ?, turn_id = ? WHERE token_hash = ? AND used_at IS NULL").bind(createdAt, turnId, tokenHash);
-    const results = await c.env.DB.batch([insert, consume]);
+    const progress = session.phrase_id
+      ? c.env.DB.prepare("INSERT INTO user_progress (user_id, phrase_id, times_practiced, last_practiced_at, mastered) VALUES (?, ?, 1, ?, 0) ON CONFLICT(user_id, phrase_id) DO UPDATE SET times_practiced = user_progress.times_practiced + 1, last_practiced_at = excluded.last_practiced_at, mastered = CASE WHEN user_progress.times_practiced + 1 >= 3 THEN 1 ELSE user_progress.mastered END").bind(session.user_id, session.phrase_id, createdAt)
+      : null;
+    const results = await c.env.DB.batch(progress ? [insert, consume, progress] : [insert, consume]);
     if (Number(results[1]?.meta?.changes || 0) !== 1) throw new ApiError("DB_PERSIST_ERROR", "Không thể xác nhận lượt luyện.", true, "PERSISTENCE");
-    const response: TurnResponse = { turnId, transcript, aiReply: aiResult.reply, corrections: aiResult.corrections, audioBase64, audioAvailable };
+    const response: TurnResponse = { turnId, transcript, aiReply: aiResult.reply, corrections: aiResult.corrections, audioBase64, audioAvailable, ...(session.phrase_id ? { phraseId: session.phrase_id } : {}) };
     return c.json(response);
   } catch (error) {
     return errorResponse(error);

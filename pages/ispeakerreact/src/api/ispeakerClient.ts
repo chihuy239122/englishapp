@@ -60,8 +60,8 @@ class ISpeakerClient {
     return res.json() as Promise<T>;
   }
 
-  async createSession(params: { userId: string; persona: Persona; level: Level }): Promise<{ sessionId: string }> {
-    return this.request<{ sessionId: string }>("/sessions", {
+  async createSession(params: { userId: string; persona: Persona; level: Level; moduleId?: string; lessonId?: string; phraseId?: string }): Promise<{ sessionId: string; moduleId?: string | null; lessonId?: string | null; phraseId?: string | null }> {
+    return this.request<{ sessionId: string; moduleId?: string | null; lessonId?: string | null; phraseId?: string | null }>("/sessions", {
       method: "POST",
       body: JSON.stringify(params),
     });

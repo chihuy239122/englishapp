@@ -180,6 +180,14 @@ Error stages: `AUDIO_UPLOAD`, `STT`, `LLM_GEN`, `TTS_GEN`, `PERSISTENCE`. Error 
 
 ### `GET /api/users/:id/stats` — tính tổng phút luyện, số lượt, theo ngày (query aggregate trên `sessions`/`turns`, KHÔNG cần bảng riêng).
 
+### Curriculum và tiến trình học tập
+- `GET /api/content/curriculum` trả cây `modules → lessons → phrases/vocabulary`; mỗi bài có tối thiểu 5 câu và 3 từ vựng kèm IPA, meaning, example.
+- `POST /api/sessions` nhận thêm `moduleId`, `lessonId`, `phraseId` tùy chọn. Worker kiểm tra quan hệ lesson/phrase trước khi lưu context vào D1.
+- `turns.phrase_id` giữ câu mục tiêu của session. Sau khi lượt nói được persistence thành công, Worker upsert `user_progress`; sau 3 lượt luyện cùng câu, `mastered=1`.
+- `GET /api/users/:id/progress` trả tiến trình theo module/bài, số câu đã luyện, số câu mastered, phần trăm hoàn thành và trạng thái mở khóa tuần tự.
+- Màn hình chính truyền context từ iSpeaker/lesson vào session, hiển thị câu mục tiêu khi ghi âm và chỉ đọc dữ liệu lộ trình từ Worker; không tạo bản sao nội dung trong UI.
+- `GET /api/content/levels` trả ngân hàng CEFR A1–C1 bổ sung gồm level, unit, vocabulary IPA và sentence examples; dữ liệu dùng namespace riêng để không xung đột với progress phrase MVP.
+
 ## 6. Prompt templates theo persona/level
 
 Hệ thống prompt LUÔN yêu cầu Llama trả về đúng JSON theo schema, ví dụ:
@@ -224,6 +232,7 @@ Level điều chỉnh độ phức tạp câu trả lời: `beginner` = câu ng�
 - **Phase 3**: Thêm MeloTTS, thêm lưu D1 đầy đủ theo schema mục 3.
 - **Phase 4**: Thêm UI chọn persona/level, thêm R2 lưu audio người dùng (có cờ bật/tắt), thêm màn thống kê.
 - **Phase 5**: Deploy Lớp 1 (`ispeakerreact`) lên Cloudflare Pages riêng, nối liên kết giữa 2 lớp trong UI.
+- **Phase 6**: Mở rộng curriculum: module/lesson/vocabulary/progress, nối context vào session/turn và kiểm live API/UI.
 
 Sau mỗi phase: chạy `wrangler deploy --dry-run` để bắt lỗi cấu hình sớm, và ghi metadata số neuron/latency/status mỗi request (không log transcript, audio hay token) để tự kiểm tra ngân sách free tier thực tế.
 

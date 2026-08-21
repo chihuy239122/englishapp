@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Persona, Level, TurnData } from "../types";
+import { Persona, Level, TurnData, CurriculumPhrase } from "../types";
 import { apiClient, ApiError } from "../api/client";
 import {
   transition,
@@ -21,6 +21,8 @@ interface PracticeWorkspaceProps {
   persona: Persona;
   level: Level;
   userId: string;
+  lessonTitle?: string;
+  targetPhrase?: CurriculumPhrase;
 }
 
 export const PracticeWorkspace: React.FC<PracticeWorkspaceProps> = ({
@@ -28,6 +30,8 @@ export const PracticeWorkspace: React.FC<PracticeWorkspaceProps> = ({
   persona,
   level,
   userId,
+  lessonTitle,
+  targetPhrase,
 }) => {
   const [machineCtx, setMachineCtx] = useState<MachineContext>(initialContext);
   const [turns, setTurns] = useState<TurnData[]>([]);
@@ -269,6 +273,17 @@ export const PracticeWorkspace: React.FC<PracticeWorkspaceProps> = ({
 
   return (
     <main className="practice-workspace" id="main-content">
+      {(lessonTitle || targetPhrase) && (
+        <section className="target-phrase-card" aria-labelledby="target-phrase-title">
+          <div className="target-phrase-meta"><span className="eyebrow">Đang luyện</span>{lessonTitle && <span>{lessonTitle}</span>}</div>
+          {targetPhrase && <>
+            <h2 id="target-phrase-title">{targetPhrase.english}</h2>
+            <p className="target-phrase-translation">{targetPhrase.vietnameseHint}</p>
+            {targetPhrase.phoneticHint && <p className="target-phrase-phonetic">{targetPhrase.phoneticHint}</p>}
+          </>}
+          <p className="target-phrase-tip">Nói câu mục tiêu bằng lời của bạn. Sau khi ghi âm, bạn có thể sửa transcript trước khi gửi.</p>
+        </section>
+      )}
       {/* Live Status Banner */}
       <div className="status-banner" role="status" aria-live="polite">
         {machineCtx.state === "IDLE" && (

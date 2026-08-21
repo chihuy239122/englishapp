@@ -24,4 +24,28 @@ describe("initial D1 schema", () => {
     expect(migration).toContain("Openjam");
     expect(migration).toContain("CC0");
   });
+
+  it("contains the curriculum, vocabulary and learner progress contract", () => {
+    const migration = readFileSync(resolve(process.cwd(), "../../migrations/0003_curriculum_expansion.sql"), "utf8");
+
+    expect(migration).toContain("CREATE TABLE content_modules");
+    expect(migration).toContain("CREATE TABLE content_lessons");
+    expect(migration).toContain("CREATE TABLE content_vocabulary");
+    expect(migration).toContain("CREATE TABLE lesson_phrases");
+    expect(migration).toContain("CREATE TABLE user_progress");
+    expect(migration).toContain("ALTER TABLE sessions ADD COLUMN lesson_id TEXT");
+    expect(migration).toContain("ALTER TABLE turns ADD COLUMN phrase_id TEXT");
+    expect(migration).toContain("ipa TEXT");
+  });
+
+  it("keeps the extended CEFR bank isolated from the lesson vocabulary table", () => {
+    const migration = readFileSync(resolve(process.cwd(), "../../migrations/0004_curriculum_levels.sql"), "utf8");
+
+    expect(migration).toContain("CREATE TABLE content_levels");
+    expect(migration).toContain("CREATE TABLE content_units");
+    expect(migration).toContain("CREATE TABLE content_level_vocabulary");
+    expect(migration).toContain("CREATE TABLE content_unit_sentences");
+    expect(migration).toContain("A1");
+    expect(migration).toContain("C1");
+  });
 });

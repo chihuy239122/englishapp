@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserStatsResponse, UserDailyStat } from "../types";
+import { UserStatsResponse, UserDailyStat, UserProgressResponse } from "../types";
 import { apiClient } from "../api/client";
 
 interface StatsViewProps {
@@ -8,6 +8,7 @@ interface StatsViewProps {
 
 export const StatsView: React.FC<StatsViewProps> = ({ userId }) => {
   const [stats, setStats] = useState<UserStatsResponse | null>(null);
+  const [progress, setProgress] = useState<UserProgressResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,8 +16,9 @@ export const StatsView: React.FC<StatsViewProps> = ({ userId }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await apiClient.getUserStats(userId);
+      const [data, progressData] = await Promise.all([apiClient.getUserStats(userId), apiClient.getUserProgress(userId)]);
       setStats(data);
+      setProgress(progressData);
     } catch (err: any) {
       setError(err.message || "Không thể tải dữ liệu thống kê.");
     } finally {
@@ -76,6 +78,30 @@ export const StatsView: React.FC<StatsViewProps> = ({ userId }) => {
             </div>
 
             <section className="daily-stats-section">
+              <section className="learning-progress-section" aria-labelledby="learning-progress-heading">
+                <div className="progress-section-header">
+                  <div><h3 id="learning-progress-heading">Tiến trình lộ trình</h3><p>Theo dõi số câu đã luyện và bài đã mở khóa.</p></div>
+                  <strong>{progress?.modules.reduce((sum, module) => sum + module.lessons.filter((lesson) => lesson.completionPercent > 0).length, 0) ?? 0} bài đang học</strong>
+                </div>
+                <div className="progress-module-list">
+                  {(progress?.modules ?? []).map((module) => (
+                    <article key={module.moduleId} className="progress-module-card">
+                      <div className="progress-module-title"><strong>{module.title}</strong><span>{module.completionPercent}%</span></div>
+                      <div className="progress-bar" aria-label={`${module.title}: ${module.completionPercent}%`}><span style={{ width: `${module.completionPercent}%` }} /></div>
+                      <div className="progress-lesson-list">
+                        {module.lessons.map((lesson) => (
+                          <div key={lesson.lessonId} className="progress-lesson-row">
+                            <span className={`progress-status ${lesson.completionPercent >= 100 ? "complete" : lesson.unlocked ? "open" : "locked"}`} aria-label={lesson.unlocked ? "Đã mở" : "Chưa mở"}>{lesson.completionPercent >= 100 ? "✓" : lesson.unlocked ? "•" : "🔒"}</span>
+                            <span>{lesson.title}</span><small>{lesson.practicedPhrases}/{lesson.totalPhrases} câu</small>
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+
+              <section className="daily-stats-section">
               <h3>Chi tiết theo ngày</h3>
               {(!stats.dailyStats || stats.dailyStats.length === 0) ? (
                 <p className="no-data">Chưa có dữ liệu thống kê theo ngày.</p>
@@ -101,6 +127,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ userId }) => {
                   </table>
                 </div>
               )}
+              </section>
             </section>
           </div>
         ) : null}

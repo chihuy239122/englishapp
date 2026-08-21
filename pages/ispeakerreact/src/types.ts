@@ -42,6 +42,12 @@ export interface SessionInfo {
   startedAt: number;
 }
 
+export interface LearningContext {
+  moduleId?: string;
+  lessonId?: string;
+  phraseId?: string;
+}
+
 export type ErrorStage = "AUDIO_UPLOAD" | "STT" | "LLM_GEN" | "TTS_GEN" | "PERSISTENCE";
 
 export interface ApiErrorEnvelope {
