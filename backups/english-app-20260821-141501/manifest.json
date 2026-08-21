@@ -1,0 +1,542 @@
+﻿[
+    {
+        "path":  "AGENTS.md",
+        "sha256":  "E426662784311D298077B2E37E041622EC0F5BB408148405EEAF629084D1DDCD",
+        "bytes":  6005
+    },
+    {
+        "path":  "CLOUDFLARE_PROGRESS.md",
+        "sha256":  "C22352D4585EF3E928E1D122A8DE1AEE644FA06850977D32C1C145C5225695AD",
+        "bytes":  29822
+    },
+    {
+        "path":  "HANDOFF.md",
+        "sha256":  "A8486D1966FA1156FE02484750DDFF70568AD052ECCA137D2D69A982A95BC13A",
+        "bytes":  2713
+    },
+    {
+        "path":  "package-lock.json",
+        "sha256":  "1A747C03D24C0F88DD58C379F363F7F053E1015E27E49540A42B5D02EE4E030A",
+        "bytes":  48327
+    },
+    {
+        "path":  "package.json",
+        "sha256":  "4EF705194D86706ED7B9A8200705FC334E827E585241A23571A2DE9DE21A40BC",
+        "bytes":  468
+    },
+    {
+        "path":  "SPEC-english-app.md",
+        "sha256":  "D7181A0D52A584F2CE88FE101BE5F032D4D12A917AACE1596C3ABD986DF2CFF1",
+        "bytes":  17834
+    },
+    {
+        "path":  "tsconfig.json",
+        "sha256":  "936651B67B306C8A9E12379F27DBFE76A33D46F5BF121422B4BDABC64B92D938",
+        "bytes":  100
+    },
+    {
+        "path":  "wrangler.jsonc",
+        "sha256":  "B5EF4D485C78BE6EA4322C2FBFFD46170CF1F378FFC7CD94D55A08D5814E7CCA",
+        "bytes":  649
+    },
+    {
+        "path":  "apps\\api\\package.json",
+        "sha256":  "3A7CCC57F9C85E0758AC44ED71026E900EF63A855D1B895873A1298F2476E42D",
+        "bytes":  345
+    },
+    {
+        "path":  "apps\\api\\tsconfig.json",
+        "sha256":  "B0E8E64BD0ECEB5FE89FF59C25FBFDE918357DBF7070392D212A4E3C36C6EBA4",
+        "bytes":  275
+    },
+    {
+        "path":  "apps\\api\\src\\index.ts",
+        "sha256":  "EDD5FCA81718667AAD1F176698DF2EC47D28E47423E8D9C858F8CE734FBCACE6",
+        "bytes":  1544
+    },
+    {
+        "path":  "apps\\api\\src\\ai\\llama.ts",
+        "sha256":  "5DD4BDF96542CA1E07E233024C01A0E036591F9B68C53D94A272FFBE5722BB66",
+        "bytes":  3380
+    },
+    {
+        "path":  "apps\\api\\src\\ai\\melotts.ts",
+        "sha256":  "3D2E06042ADD51F85013BF192F23CEB57E9E2B60012AC92B82D2F9E0E0B694FD",
+        "bytes":  912
+    },
+    {
+        "path":  "apps\\api\\src\\ai\\personas.ts",
+        "sha256":  "B45F2D9C204EB96D5C8B7835839D888A4A725646C873C4CD514A19D2A5376474",
+        "bytes":  1402
+    },
+    {
+        "path":  "apps\\api\\src\\lib\\audio.ts",
+        "sha256":  "432E8A92E52F9F0764BFC7773C12DD1610AC691F091E78657BF2771045C1AD0C",
+        "bytes":  1603
+    },
+    {
+        "path":  "apps\\api\\src\\lib\\errors.ts",
+        "sha256":  "CCA3FFB34BD642DC530C65E8364F32B4B0AF5F423CB5B14F8A7EBCBD7F5E5706",
+        "bytes":  1223
+    },
+    {
+        "path":  "apps\\api\\src\\lib\\ids.ts",
+        "sha256":  "9F7C104D8447340C03462A1079F89D537DB12BACD8EDACCE708C21A867C64C9B",
+        "bytes":  340
+    },
+    {
+        "path":  "apps\\api\\src\\lib\\validation.ts",
+        "sha256":  "9D1947501CF3FEA4B144B8E5D82CE1B96A605B730505FA39956D7E9D5F4C06A3",
+        "bytes":  1167
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\content.ts",
+        "sha256":  "474B57A99B0205EB805DB7429856B31AE296CB3D8FE7D8A01B98211AEBA8483D",
+        "bytes":  496
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\history.ts",
+        "sha256":  "C64606241E0695E7409249D36DAE4E41A65D5BDC3B17BED1C17577050762696C",
+        "bytes":  623
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\sessions.ts",
+        "sha256":  "DA2764A24677148D9FA068BE0BDDFFD6C33FCC26255BF9918D554EA9BFB2988D",
+        "bytes":  1111
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\stats.ts",
+        "sha256":  "86300172460C7494E57ACDF93CE2BBF682287C816301F373474EC508A01499FD",
+        "bytes":  1165
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\transcribe.ts",
+        "sha256":  "DBDF0231BA7C7B68F6E4B857EF38C598B64E5466BE7F19E164EFC4DF76693ADF",
+        "bytes":  3302
+    },
+    {
+        "path":  "apps\\api\\src\\routes\\turns.ts",
+        "sha256":  "BD0A59FA9AD22F5C9839BD6D3F85E497286B178B5AF1F2BF92924B26E11BAE58",
+        "bytes":  5812
+    },
+    {
+        "path":  "apps\\api\\src\\services\\ai.ts",
+        "sha256":  "E1B6E2EAD29910524CC9BD628326450DBBA0ABD2FE7922B492E2BD91D9812B06",
+        "bytes":  713
+    },
+    {
+        "path":  "apps\\api\\src\\services\\content.ts",
+        "sha256":  "92FB058CD85ABBCB83B473F56C02A682CC06D551B83FB52C113EF379A8178C56",
+        "bytes":  2681
+    },
+    {
+        "path":  "apps\\api\\src\\services\\db.ts",
+        "sha256":  "792F2AA05DD479FDEBC11F2C1F971BE284CA874FA228B9F3E029A85D2EC670E0",
+        "bytes":  1519
+    },
+    {
+        "path":  "apps\\api\\src\\services\\tokens.ts",
+        "sha256":  "8AB60DEB1D2A76CFA71194EB83DF4D8E3FFB2A41A56F6E64274057F8C6C7A7F8",
+        "bytes":  2633
+    },
+    {
+        "path":  "apps\\web\\index.html",
+        "sha256":  "971B2577671CB280C4ED89BBF71FE05A259D00A91C8006D82C6046C3EBD42A74",
+        "bytes":  344
+    },
+    {
+        "path":  "apps\\web\\package.json",
+        "sha256":  "A612715E2E295209FE7BEF2A2A84FF0AFF3CF999678829D4D5AC00F65A72A9A1",
+        "bytes":  454
+    },
+    {
+        "path":  "apps\\web\\tsconfig.json",
+        "sha256":  "C0527B6336B12712F46A4E498095037EA4634EA56F013F4008CA5A76A8E5FF4F",
+        "bytes":  583
+    },
+    {
+        "path":  "apps\\web\\vite.config.ts",
+        "sha256":  "37708037BC07401AD7482D67E53B25D9ED6928B8EC4ADA3DB2141D6D4B7E70B6",
+        "bytes":  372
+    },
+    {
+        "path":  "apps\\web\\src\\App.tsx",
+        "sha256":  "117959303C364B12F4472FE6B6D37DBEDC4753C7933707C6302D6C1A478430EA",
+        "bytes":  2527
+    },
+    {
+        "path":  "apps\\web\\src\\main.tsx",
+        "sha256":  "EF0A264C38A4A80BE153810A816240BCE0933A63FE1C68B2EF43819134E40278",
+        "bytes":  247
+    },
+    {
+        "path":  "apps\\web\\src\\types.ts",
+        "sha256":  "6874945584D2E89ABE389E309DAE742E2643DC102808546AB244E584E6B37FBB",
+        "bytes":  1867
+    },
+    {
+        "path":  "apps\\web\\src\\api\\client.ts",
+        "sha256":  "AE2A0340D9B070C06CB5BD1E949DDA9472ABCC99F65FE59977CA061A337DDE89",
+        "bytes":  3348
+    },
+    {
+        "path":  "apps\\web\\src\\components\\Header.tsx",
+        "sha256":  "B7D1A8F5ADC02D53C5EFEE8DEC968360125D33DEFD211E271E599E7036249AAC",
+        "bytes":  3210
+    },
+    {
+        "path":  "apps\\web\\src\\components\\PracticeWorkspace.tsx",
+        "sha256":  "BDC467E96E4F6A5E8791CA8A7C61CD319A402F4947DA074DF2430A24A12CF490",
+        "bytes":  12433
+    },
+    {
+        "path":  "apps\\web\\src\\components\\StartScreen.tsx",
+        "sha256":  "866625F2F53A56A491A257344CF45750802879F9C6F23DC1A49795DFF3D6CCA7",
+        "bytes":  4912
+    },
+    {
+        "path":  "apps\\web\\src\\components\\StatsView.tsx",
+        "sha256":  "E0017A9B5B6031950B497B463FCDF961DF85F1B86314FD1BDC0FAB2160612852",
+        "bytes":  3819
+    },
+    {
+        "path":  "apps\\web\\src\\components\\TranscriptEditor.tsx",
+        "sha256":  "D1234A257321F9E33FED2C3183D3C19418EA09390FCA71EABA8DD2CCE2611BD5",
+        "bytes":  3230
+    },
+    {
+        "path":  "apps\\web\\src\\components\\TurnHistory.tsx",
+        "sha256":  "F3281DDCE070B620566E13999A6CF42FF0E0938ACA7928C36858E2C9D7B050F1",
+        "bytes":  3834
+    },
+    {
+        "path":  "apps\\web\\src\\styles\\index.css",
+        "sha256":  "C34FF4123651654037E7CD28053B22840B7ED3EB85E4CC76A24B64F22A1A8F7A",
+        "bytes":  11653
+    },
+    {
+        "path":  "apps\\web\\src\\utils\\audio.ts",
+        "sha256":  "9071D8BBB417C9F42EB4FCAE51EF7DFF46E4F5AE200B607F300B6199BD0A3180",
+        "bytes":  3972
+    },
+    {
+        "path":  "apps\\web\\src\\utils\\stateMachine.ts",
+        "sha256":  "7A1BCA32E2DE460195B5957CDFE8C34196C08963A64AE8C1F4A2E7C100A1C212",
+        "bytes":  4923
+    },
+    {
+        "path":  "backups\\LATEST.md",
+        "sha256":  "DBC34F346D7A441F443BD2A5B7877CDAF66C64B7CA95DB5B5C23F027F2D26B60",
+        "bytes":  59
+    },
+    {
+        "path":  "backups\\english-app-20260820-221413\\manifest.json",
+        "sha256":  "42B7529EBDED661D9BCED362BE62B7661DD3E8934B7B564310FB6FC1A0241B89",
+        "bytes":  15220
+    },
+    {
+        "path":  "backups\\english-app-20260820-221426\\LATEST.md",
+        "sha256":  "0537E15794F8EFB0A4878E53E5FEB4D9E185E98B1B45940C7EAF437E0675FA49",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-221426\\manifest.json",
+        "sha256":  "C258D849DBFE8AE881A0325ECB639B80778B42EB741D996D7A100E689CE2649A",
+        "bytes":  15421
+    },
+    {
+        "path":  "backups\\english-app-20260820-221856\\LATEST.md",
+        "sha256":  "0E3A61CD78A0F6AD0939E81312DF4D1362BA478E48FE34BB7F4C21B9C4B8F5E7",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-221856\\manifest.json",
+        "sha256":  "8566D6B204D11193FAFFC163478CA07C56ACA941EACE2720947FEEA9CE2F29F6",
+        "bytes":  15982
+    },
+    {
+        "path":  "backups\\english-app-20260820-222345\\LATEST.md",
+        "sha256":  "1274230DB363B82EB35DEEDA77E77BDC3D64DC6B0035CE2A599B1DCE48E0DA7B",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-222345\\manifest.json",
+        "sha256":  "56DBB16238B88F23D3554BDEFC98C999FC0099AEE654B2777CCC1DE2977FE585",
+        "bytes":  16378
+    },
+    {
+        "path":  "backups\\english-app-20260820-225752\\LATEST.md",
+        "sha256":  "B79A17765E50EABF9FD27F533BB753BCAD1776A3BE1D44FD771A05FCB69FA3F7",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-225752\\manifest.json",
+        "sha256":  "5D07F3D4A356327B682F88B527DB4EF976CC1E55712E2A7564830FEF3BC54DB2",
+        "bytes":  17677
+    },
+    {
+        "path":  "backups\\english-app-20260820-230208\\LATEST.md",
+        "sha256":  "C21440CBF188C8B646D3AF6C9E6CF9C2164B7F7A657CCE24973B1F12CE6FB15D",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-230208\\manifest.json",
+        "sha256":  "A4EC48A9B4D501DCD20FAEC4B51E9DE25D5C9DF7EB220C68791C06B37CA1591E",
+        "bytes":  18073
+    },
+    {
+        "path":  "backups\\english-app-20260820-230228\\LATEST.md",
+        "sha256":  "0CF5EB3D6B7312BB57DB608C8077D90A64CF22109610B1A3EEB0D76653B8CB71",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260820-230228\\manifest.json",
+        "sha256":  "76013874AF08A88F22F1F3B8C8DEF1F0FA7D047D1C819EE5FAD1C00959A5D8A8",
+        "bytes":  18469
+    },
+    {
+        "path":  "backups\\english-app-20260821-131409\\LATEST.md",
+        "sha256":  "952B0F0E068F298680A099E3B06ED35E6A3E15DBE7D7ECDC46176E1644651D16",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260821-131409\\manifest.json",
+        "sha256":  "F0DFFFA20D15EBCD040C57ABFDC26F131CFF15D692753A93A502F21F5EF93736",
+        "bytes":  19068
+    },
+    {
+        "path":  "backups\\english-app-20260821-140238\\LATEST.md",
+        "sha256":  "9BA323A75707A0274E39BF65A86F387C5AFC5F78D0B1477A856A8888685BE386",
+        "bytes":  352
+    },
+    {
+        "path":  "backups\\english-app-20260821-140238\\manifest.json",
+        "sha256":  "6EF38568AB27BA1A628CC06943D5908943D8DF833E73387C727861D6975A5D3E",
+        "bytes":  19464
+    },
+    {
+        "path":  "docs\\CONTENT_SOURCES.md",
+        "sha256":  "D5ECDA82EFAB685F11E9EEE1C6A7A85EEEDC9FBBFBF931CE0E0AA709936C9B9C",
+        "bytes":  1402
+    },
+    {
+        "path":  "docs\\PROJECT_CURRENT_STATE.md",
+        "sha256":  "F4602054E49C63D87342552EAC21445DEA5AA364FDC612BA3C70210784F22D30",
+        "bytes":  26677
+    },
+    {
+        "path":  "docs\\voice-api-openapi-v1.yaml",
+        "sha256":  "73F4D1ACC9EC5C2C713DD02592C64965CE79692A248C58316AC339AB92534A78",
+        "bytes":  9326
+    },
+    {
+        "path":  "docs\\reviews\\2026-08-19-aki-ui-plan-review-blocked.md",
+        "sha256":  "91B8A6352167C0A197AF9BB9FF7EE9CD9C491C10238C0D97CA249E8BB16BAF49",
+        "bytes":  1798
+    },
+    {
+        "path":  "docs\\reviews\\2026-08-20-aki-english-app-review-blocked.md",
+        "sha256":  "38B5C5E47BF27201B4CD92C13FDD1D65C640C95AA774B11388DB72159FD4E719",
+        "bytes":  11711
+    },
+    {
+        "path":  "docs\\reviews\\2026-08-21-aki-english-app-followup.md",
+        "sha256":  "7797814D746536A999CB70A252955373FBF4546A2F078AAFDAE63B48B336C029",
+        "bytes":  2059
+    },
+    {
+        "path":  "docs\\superpowers\\plans\\2026-08-19-english-app-rebuild-plan.md",
+        "sha256":  "B9508046B7E7871193EAEE231C826994887D52A672E98DA716072891892B58B7",
+        "bytes":  22341
+    },
+    {
+        "path":  "migrations\\0001_init.sql",
+        "sha256":  "555436AA85817A835CA7F19A5215B137B9784FCA5B462A0CD088D241F6027B3C",
+        "bytes":  1200
+    },
+    {
+        "path":  "migrations\\0002_learning_content.sql",
+        "sha256":  "D64D45DCB766FAC2190037CE14540DABA8955CD82A20B1232EEC5F1269B1EF4E",
+        "bytes":  6554
+    },
+    {
+        "path":  "packages\\shared\\index.ts",
+        "sha256":  "D51485B82B29D07016E9D3359F271622966ACA8EDFC59648A1D2369E6404123D",
+        "bytes":  25
+    },
+    {
+        "path":  "packages\\shared\\package.json",
+        "sha256":  "05FAD5FFA094A4A0117389DAF993E370860E7ED12C315D9D48E67FE10FA0958E",
+        "bytes":  146
+    },
+    {
+        "path":  "packages\\shared\\types.ts",
+        "sha256":  "502F668ACA28092CEEEAAE88F64D8A41EF99B7C0C3E359ABF4E7B7B4084E48B5",
+        "bytes":  1265
+    },
+    {
+        "path":  "pages\\ispeakerreact\\index.html",
+        "sha256":  "39B5034F29A4784EA094F023760FA4D942EA59EF158EF5997987EC2F148D909E",
+        "bytes":  572
+    },
+    {
+        "path":  "pages\\ispeakerreact\\package-lock.json",
+        "sha256":  "F6724F459280EE389A165A37C1A5B7FE0772B5D452E2FF650793F493C3C993BF",
+        "bytes":  27930
+    },
+    {
+        "path":  "pages\\ispeakerreact\\package.json",
+        "sha256":  "91676FC9DE7CDE1290AD2C55B90E49192DA7EDCE4A6F7EC5D6378318F2922B55",
+        "bytes":  464
+    },
+    {
+        "path":  "pages\\ispeakerreact\\tsconfig.json",
+        "sha256":  "5A59408F5BC5261C3903CA6FB2AF627FDF0B5F941888D727D496753983D83485",
+        "bytes":  499
+    },
+    {
+        "path":  "pages\\ispeakerreact\\vite.config.ts",
+        "sha256":  "4B87AC81780B4E3D59348F4C6E447EF79A4743DF5970D807FFDD96EBC87B253A",
+        "bytes":  340
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\App.tsx",
+        "sha256":  "5944A14198E518DD00A5E5BFBA59EB2A74656B1287DA8FEFC25B1C7BDB095812",
+        "bytes":  4641
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\main.tsx",
+        "sha256":  "EF0A264C38A4A80BE153810A816240BCE0933A63FE1C68B2EF43819134E40278",
+        "bytes":  247
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\types.ts",
+        "sha256":  "6F918132006D0673D5C024BD19ED9B289929B2F77FCA014B11ECB01F77329A41",
+        "bytes":  1270
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\api\\ispeakerClient.ts",
+        "sha256":  "2AB168D8E384DD485941794682EF6FA636C352637E8CF237B21EF07A68A9174F",
+        "bytes":  4387
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\Header.tsx",
+        "sha256":  "746831C0A3344845C2695F8CE8C041ED9F2E6B05D1A9EC06051B3DE70A2162F3",
+        "bytes":  3237
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\MainAppBridge.tsx",
+        "sha256":  "02B6D04F5157B1071362F8D4C9BA0A32DA91C02BCA4306E82CCEC272FDA20EDA",
+        "bytes":  4449
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\MicCheck.tsx",
+        "sha256":  "3BE74004379459464E220B239FAD527EAF76B1152999DF662267F424E25DC784",
+        "bytes":  8696
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\PhraseCards.tsx",
+        "sha256":  "9E97AEEA4786876849C58201B17E5C3C57C4FC2430BBE8972451548FD9BEB0A4",
+        "bytes":  3451
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\StatsSummary.tsx",
+        "sha256":  "AB2A1916C5B5C6BF47CAD4735744784B2CDB09EB7ACB523CC5F7008C235A4E07",
+        "bytes":  3755
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\components\\TopicSelector.tsx",
+        "sha256":  "0BBC6299A0543C4CCAAA4539B861F1B92CB2CA45F569E8FCAF6A24036C88DE2E",
+        "bytes":  3589
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\styles\\index.css",
+        "sha256":  "749BC6A5674907E337F00C01E8DA7458E040C4C7045A64F2502A4251DBA33AA2",
+        "bytes":  10620
+    },
+    {
+        "path":  "pages\\ispeakerreact\\src\\utils\\audioUtils.ts",
+        "sha256":  "51FF5A6BFB288DB6B9C9682B2E6796A147B5723951781CBE9ED573392F79D019",
+        "bytes":  3828
+    },
+    {
+        "path":  "scripts\\create-alex-handoff.ps1",
+        "sha256":  "327751EF3EE1FEC4426562B53BB7A8255EDA1D0D4A03529872CA518A8EDFC0F4",
+        "bytes":  67
+    },
+    {
+        "path":  "scripts\\create-english-app-handoff.ps1",
+        "sha256":  "8807B7758DDEFE584C4700636535061BFB4C61F8F4F008DD0D37F232B088AEF3",
+        "bytes":  1677
+    },
+    {
+        "path":  "tests\\api\\ai.test.ts",
+        "sha256":  "7DE25865CED9AAB26108D0714125BF22BF9FF4AD0995C8677D2943881C80D012",
+        "bytes":  759
+    },
+    {
+        "path":  "tests\\api\\audio.test.ts",
+        "sha256":  "49DC13980685937B8715D5703B4A8BA07000A55A524DF0C80F0CD5E251CAE5E3",
+        "bytes":  622
+    },
+    {
+        "path":  "tests\\api\\content.test.ts",
+        "sha256":  "F09C724270808C215074D474A51E7AE420458444A4DD70EDF97209150E6B18AD",
+        "bytes":  2084
+    },
+    {
+        "path":  "tests\\api\\health.test.ts",
+        "sha256":  "D75B3B59A7E5C6477823AEA8E155DD7E93D3B66E0BC1920553BB0B0D039B9B9E",
+        "bytes":  370
+    },
+    {
+        "path":  "tests\\api\\package.json",
+        "sha256":  "34D4235DD19EE5DCEAA3EE3992BA2949F401C0945FB44C8C30BEF6BE15AB681A",
+        "bytes":  220
+    },
+    {
+        "path":  "tests\\api\\schema.test.ts",
+        "sha256":  "B7ED1998F23B93D9A3928C10482BABFF07B1404F3EFA3EEF83DC9C59459141E9",
+        "bytes":  1245
+    },
+    {
+        "path":  "tests\\api\\tsconfig.json",
+        "sha256":  "3B0AF6EA4C1F2DA1CBF07ECFE6D92DFA5F3B62308E7521A2AE79B260A2FABCBE",
+        "bytes":  268
+    },
+    {
+        "path":  "tests\\api\\validation.test.ts",
+        "sha256":  "17C389A1BF9B3937159AC9154A475FFB0216D34E3D884E1273A2F30C09C466E5",
+        "bytes":  585
+    },
+    {
+        "path":  "tests\\ui\\apiClient.test.ts",
+        "sha256":  "14412F487EE3BB3BA2D80D1F723F5503C4B98CD6053A9E6430FBD6A1920B9A73",
+        "bytes":  3057
+    },
+    {
+        "path":  "tests\\ui\\audioUtils.test.ts",
+        "sha256":  "AF42F15E8FF69ADC714D6501AE2496F28BA0F202BC8633016E3692D2D662DBE1",
+        "bytes":  1957
+    },
+    {
+        "path":  "tests\\ui\\ispeaker.test.ts",
+        "sha256":  "237F8F0594B67E76EC0B0A02C87CE818920FA4006C4B9F5D5A6CBA50C22A0FAA",
+        "bytes":  12390
+    },
+    {
+        "path":  "tests\\ui\\package.json",
+        "sha256":  "A9B77DFB882E92EBBE179459F284550E6CD89D76E88C10BE38C3379C9E467F94",
+        "bytes":  224
+    },
+    {
+        "path":  "tests\\ui\\stateMachine.test.ts",
+        "sha256":  "CFC29FC7581D00CECA264B3235086FD0F728AFFF1E110C1676DF56B96443EE5C",
+        "bytes":  4187
+    },
+    {
+        "path":  "tests\\ui\\tsconfig.json",
+        "sha256":  "DDA35249F19F62BBB93BAEF3D574E9571BE927D1BF98E20EE4D36FC1B7E5FE87",
+        "bytes":  205
+    }
+]

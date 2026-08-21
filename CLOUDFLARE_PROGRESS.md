@@ -326,3 +326,10 @@ wrangler pages deploy . --project-name alex-pro-admin
 - Worker `english-app-api` deployed version `52af7107-6743-4d8e-bd07-ff5c30bd3943`.
 - Pages `ispeakerreact` deployed at `https://44a85bd7.ispeakerreact-5u6.pages.dev`; canonical URL returned HTTP 200 and live DOM showed the selected advanced topic with the matching `advanced` phrase label.
 - Remaining acceptance gates: real iPhone Safari microphone/audio test and GitHub write permission (`skymax2309` remains `push=false`).
+
+## GitHub source sync (2026-08-21)
+
+- Verified the project `.env` GitHub configuration without printing its token value.
+- API readback returned `push=true` for `chihuy239122/englishapp`.
+- Initialized local `main`, confirmed secret env files are not tracked, and pushed commit `3914a1de9ca03bc87e8bc3d8cb5a06f7277b574a` to the canonical GitHub remote.
+- GitHub write access is resolved; only real iPhone Safari microphone/audio acceptance remains open.

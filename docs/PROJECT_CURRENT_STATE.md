@@ -174,3 +174,11 @@
 - Worker deployed as version `52af7107-6743-4d8e-bd07-ff5c30bd3943`. Pages deployed at `https://44a85bd7.ispeakerreact-5u6.pages.dev`; canonical `https://ispeakerreact-5u6.pages.dev` returns HTTP 200.
 - Live UI readback confirms the initial selected topic displays `Phản xạ Phỏng vấn` with `Nâng cao` and the phrase section shows `(advanced)`. No D1/R2/GitHub mutation occurred.
 - GitHub remains pending: authenticated `skymax2309` has `push=false` for `chihuy239122/englishapp`.
+
+## GitHub source sync (2026-08-21)
+
+- Verified `D:\ALEXPRO\.env` contains the project GitHub credential configuration; the token value was used only in the current process and was never printed.
+- Authenticated API readback for `chihuy239122/englishapp` returned `push=true`.
+- Initialized local Git on `main`, verified `.env` and Cloudflare env files are not tracked, and pushed the source to `https://github.com/chihuy239122/englishapp.git`.
+- Published commit: `3914a1de9ca03bc87e8bc3d8cb5a06f7277b574a`.
+- GitHub source sync is no longer blocked. Real iPhone Safari microphone/audio acceptance remains pending.
