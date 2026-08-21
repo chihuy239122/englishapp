@@ -1,0 +1,16 @@
+alex-pro-cloudflare.env
+.env
+.env.*
+!.env.example
+.wrangler/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+recordings/
+**/*.local
+worker/node_modules/
+backups/d1/*.sql
+backups/handoff/*.zip
+backups/handoff/*.manifest.json
+backups/.stage-*/

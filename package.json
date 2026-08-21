@@ -1,0 +1,18 @@
+{
+  "name": "english-app-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tests/*"
+  ],
+  "scripts": {
+    "build:web": "npm --prefix apps/web run build",
+    "build:api": "npm --prefix apps/api run build",
+    "test:ui": "npm --prefix tests/ui test",
+    "test:api": "npm --prefix tests/api test",
+    "test": "npm run test:ui && npm run test:api",
+    "typecheck": "npm run build:web && npm run build:api"
+  }
+}

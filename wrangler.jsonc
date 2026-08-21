@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "english-app-api",
+  "main": "apps/api/src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "account_id": "0af62f8ed73f84c95453102139345d6f",
+  "assets": {
+    "directory": "apps/web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "english_app_db",
+      "database_id": "4ea5ccaa-c901-496c-ac0c-5854733c1428"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "AUDIO_BUCKET",
+      "bucket_name": "english-app-audio"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  }
+}

@@ -1,0 +1,249 @@
+openapi: 3.1.0
+info:
+  title: ALEX PRO Voice Learning API
+  version: 7.2.0
+  description: >-
+    Browser-only API for the ALEX PRO voice practice page. It is not a Custom GPT
+    Action. Requests require the exact approved web origin. The temporary Fish
+    TTS/replay release does not send learner audio for assessment; assessment stays
+    unavailable until its provider is explicitly configured. When enabled, audio is
+    evaluated and discarded after the request, with only score evidence retained.
+  license:
+    name: Private educational use
+    identifier: LicenseRef-ALEX-PRO-Private
+servers:
+  - url: https://alex-pro-hub-api.chihuy239122.workers.dev
+security:
+  - voiceSession: []
+paths:
+  /v1/voice/session:
+    post:
+      operationId: createVoiceSession
+      summary: Open a short-lived voice practice session after Turnstile verification.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [learner_code, turnstile_token]
+              properties:
+                learner_code: { type: string, example: HUY128999 }
+                turnstile_token: { type: string }
+      responses:
+        '201':
+          description: Short-lived browser session created.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VoiceSession' }
+        '400': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+  /v1/voice/assess:
+    post:
+      operationId: assessVoicePronunciation
+      summary: Score one short, 16 kHz mono PCM WAV pronunciation attempt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reference_text, audio_wav_base64]
+              properties:
+                reference_text: { type: string, minLength: 2, maxLength: 240 }
+                audio_wav_base64:
+                  type: string
+                  description: 16 kHz, mono, 16-bit PCM WAV, maximum 15 seconds. Never stored.
+      responses:
+        '201':
+          description: Assessment created; response contains no submitted audio.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Assessment' }
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+        '502': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+  /v1/voice/curriculum:
+    get:
+      operationId: getVoiceCurriculum
+      summary: Read the current assigned lesson plus only the lessons enabled for the signed-in learner.
+      responses:
+        '200':
+          description: Current curriculum with one small vocabulary group at a time.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VoiceCurriculum' }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+  /v1/voice/curriculum/current:
+    put:
+      operationId: selectVoiceCurriculumLesson
+      summary: Make one enabled lesson the learner's current Core lesson for Voice and ALEX PRO.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [lesson_id]
+              properties:
+                lesson_id: { type: string, pattern: '^LES-[0-9]{4}$' }
+      responses:
+        '200':
+          description: Current Core lesson changed and returned as Voice curriculum.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VoiceCurriculum' }
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+  /v1/voice/speech:
+    post:
+      operationId: synthesizeVoiceSample
+      summary: Generate a licensed English tutor sample voice for a short sentence.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text: { type: string, minLength: 1, maxLength: 600 }
+      responses:
+        '200':
+          description: MP3 audio stream.
+          content:
+            audio/mpeg: { schema: { type: string, format: binary } }
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+        '502': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+components:
+  securitySchemes:
+    voiceSession:
+      type: http
+      scheme: bearer
+      bearerFormat: ALEX short-lived browser session
+  responses:
+    Error:
+      description: A safe, user-facing error.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+    VoiceSession:
+      type: object
+      required: [status, session_token, session_expires_at, learner, access]
+      properties:
+        status: { type: string, example: voice_session_started }
+        session_token: { type: string, writeOnly: true }
+        session_expires_at: { type: string, format: date-time }
+        learner:
+          type: object
+          properties:
+            alias: { type: string }
+            level_provisional: { type: [string, 'null'] }
+            current_lesson_id: { type: [string, 'null'] }
+        access: { type: object, additionalProperties: true }
+    VoiceCurriculum:
+      type: object
+      required: [status, learner, current_lesson, available_lessons]
+      properties:
+        status: { type: string, example: curriculum_ready }
+        learner:
+          type: object
+          properties:
+            alias: { type: string }
+            level_provisional: { type: [string, 'null'] }
+        current_lesson: { $ref: '#/components/schemas/VoiceLesson' }
+        available_lessons:
+          type: array
+          maxItems: 20
+          items:
+            type: object
+            required: [id, title, selected]
+            properties:
+              id: { type: string, pattern: '^LES-[0-9]{4}$' }
+              title: { type: string }
+              level: { type: [string, 'null'] }
+              selected: { type: boolean }
+    VoiceLesson:
+      type: object
+      required: [id, title, vocabulary_groups]
+      properties:
+        id: { type: string, pattern: '^LES-[0-9]{4}$' }
+        title: { type: string }
+        level: { type: [string, 'null'] }
+        objective: { type: [string, 'null'], maxLength: 280 }
+        vocabulary_groups:
+          type: array
+          maxItems: 8
+          items:
+            type: object
+            required: [title, items]
+            properties:
+              title: { type: string }
+              items:
+                type: array
+                minItems: 1
+                maxItems: 3
+                items:
+                  type: object
+                  required: [phrase, meaning, example]
+                  properties:
+                    phrase: { type: string }
+                    meaning: { type: string }
+                    example: { type: string }
+        conversation_prompt: { type: [string, 'null'] }
+    Assessment:
+      type: object
+      required: [status, feedback]
+      properties:
+        status: { type: string, example: assessed }
+        feedback:
+          type: object
+          required: [reference_text, scores, flagged_words, coaching]
+          properties:
+            reference_text: { type: string }
+            transcript: { type: [string, 'null'] }
+            scores:
+              type: object
+              properties:
+                pronunciation: { type: number, minimum: 0, maximum: 100 }
+                accuracy: { type: number, minimum: 0, maximum: 100 }
+                fluency: { type: number, minimum: 0, maximum: 100 }
+                completeness: { type: number, minimum: 0, maximum: 100 }
+            flagged_words:
+              type: array
+              maxItems: 5
+              items:
+                type: object
+                properties:
+                  word: { type: string }
+                  accuracy: { type: number, minimum: 0, maximum: 100 }
+                  issue: { type: string }
+            coaching: { type: string }

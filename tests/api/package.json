@@ -1,0 +1,13 @@
+{
+  "name": "@english-app/tests-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "hono": "^4.6.12",
+    "vitest": "^4.0.18"
+  }
+}
