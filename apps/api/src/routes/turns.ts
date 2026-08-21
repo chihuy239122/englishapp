@@ -9,6 +9,7 @@ import { claimTurnAttempt, hashToken } from "../services/tokens";
 import { ApiError, errorResponse } from "../lib/errors";
 import { isNonEmptyString, isUuid, readJson } from "../lib/validation";
 import { newId, nowSeconds } from "../lib/ids";
+import { scorePhraseMatch } from "../services/matching";
 
 export const turnRoutes = new Hono<ApiEnv>();
 
@@ -30,6 +31,10 @@ turnRoutes.post("/api/sessions/:id/turns", async (c) => {
     }
     if (existingClient) throw new ApiError("TURN_CLIENT_ID_INVALID", "clientTurnId đã được dùng cho một lượt khác.", false, "PERSISTENCE");
     const tokenData = await claimTurnAttempt(c.env.DB, tokenHash, session.id, session.user_id);
+    const targetPhrase = session.phrase_id
+      ? await c.env.DB.prepare("SELECT english FROM content_phrases WHERE id = ?").bind(session.phrase_id).first<{ english: string }>()
+      : null;
+    const phraseMatchScore = targetPhrase?.english ? scorePhraseMatch(targetPhrase.english, transcript) : undefined;
 
     const startedAt = Date.now();
     const context = await c.env.DB.prepare("SELECT transcript, ai_reply FROM turns WHERE session_id = ? ORDER BY turn_index DESC LIMIT 5").bind(session.id).all<{ transcript: string; ai_reply: string }>();
@@ -64,16 +69,16 @@ turnRoutes.post("/api/sessions/:id/turns", async (c) => {
     const turnId = newId();
     const turnIndex = await nextTurnIndex(c.env.DB, session.id);
     const createdAt = nowSeconds();
-    const insert = c.env.DB.prepare("INSERT INTO turns (id, session_id, client_turn_id, turn_index, transcript, ai_reply, corrections, audio_base64, audio_available, user_audio_key, phrase_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").bind(
-      turnId, session.id, clientTurnId, turnIndex, transcript, aiResult.reply, JSON.stringify(aiResult.corrections), audioBase64, audioAvailable ? 1 : 0, tokenData.user_audio_key || null, session.phrase_id || null, createdAt,
+    const insert = c.env.DB.prepare("INSERT INTO turns (id, session_id, client_turn_id, turn_index, transcript, ai_reply, corrections, audio_base64, audio_available, user_audio_key, phrase_id, phrase_match_score, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").bind(
+      turnId, session.id, clientTurnId, turnIndex, transcript, aiResult.reply, JSON.stringify(aiResult.corrections), audioBase64, audioAvailable ? 1 : 0, tokenData.user_audio_key || null, session.phrase_id || null, phraseMatchScore ?? null, createdAt,
     );
     const consume = c.env.DB.prepare("UPDATE turn_tokens SET used_at = ?, turn_id = ? WHERE token_hash = ? AND used_at IS NULL").bind(createdAt, turnId, tokenHash);
     const progress = session.phrase_id
-      ? c.env.DB.prepare("INSERT INTO user_progress (user_id, phrase_id, times_practiced, last_practiced_at, mastered) VALUES (?, ?, 1, ?, 0) ON CONFLICT(user_id, phrase_id) DO UPDATE SET times_practiced = user_progress.times_practiced + 1, last_practiced_at = excluded.last_practiced_at, mastered = CASE WHEN user_progress.times_practiced + 1 >= 3 THEN 1 ELSE user_progress.mastered END").bind(session.user_id, session.phrase_id, createdAt)
+      ? await buildProgressStatement(c.env.DB, session.user_id, session.phrase_id, createdAt, (phraseMatchScore ?? 0) >= 0.55)
       : null;
     const results = await c.env.DB.batch(progress ? [insert, consume, progress] : [insert, consume]);
     if (Number(results[1]?.meta?.changes || 0) !== 1) throw new ApiError("DB_PERSIST_ERROR", "Không thể xác nhận lượt luyện.", true, "PERSISTENCE");
-    const response: TurnResponse = { turnId, transcript, aiReply: aiResult.reply, corrections: aiResult.corrections, audioBase64, audioAvailable, ...(session.phrase_id ? { phraseId: session.phrase_id } : {}) };
+    const response: TurnResponse = { turnId, transcript, aiReply: aiResult.reply, corrections: aiResult.corrections, audioBase64, audioAvailable, ...(session.phrase_id ? { phraseId: session.phrase_id } : {}), ...(phraseMatchScore !== undefined ? { phraseMatchScore } : {}) };
     return c.json(response);
   } catch (error) {
     return errorResponse(error);
@@ -93,6 +98,14 @@ async function replayTurn(env: ApiEnv["Bindings"], row: Record<string, unknown>)
     }
   }
   return response;
+}
+
+async function buildProgressStatement(db: D1Database, userId: string, phraseId: string, createdAt: number, matched: boolean): Promise<D1PreparedStatement> {
+  const existing = await db.prepare("SELECT matched_practices FROM user_progress WHERE user_id = ? AND phrase_id = ?").bind(userId, phraseId).first<{ matched_practices: number }>();
+  const matchedPractices = Number(existing?.matched_practices || 0) + (matched ? 1 : 0);
+  const intervalDays = matchedPractices >= 3 ? 14 : matchedPractices === 2 ? 7 : matchedPractices === 1 ? 3 : 0;
+  const nextReviewAt = createdAt + intervalDays * 86_400;
+  return db.prepare("INSERT INTO user_progress (user_id, phrase_id, times_practiced, matched_practices, last_practiced_at, mastered, next_review_at) VALUES (?, ?, 1, ?, ?, 0, ?) ON CONFLICT(user_id, phrase_id) DO UPDATE SET times_practiced = user_progress.times_practiced + 1, matched_practices = user_progress.matched_practices + excluded.matched_practices, last_practiced_at = excluded.last_practiced_at, mastered = CASE WHEN user_progress.matched_practices + excluded.matched_practices >= 3 THEN 1 ELSE user_progress.mastered END, next_review_at = excluded.next_review_at").bind(userId, phraseId, matched ? 1 : 0, createdAt, nextReviewAt);
 }
 
 function requireSecret(value: string | undefined): string {

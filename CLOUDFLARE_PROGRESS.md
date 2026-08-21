@@ -349,3 +349,10 @@ wrangler pages deploy . --project-name alex-pro-admin
 - Worker `english-app-api` version `d4212dde-9880-40e6-b876-a6e2250ff50f` and Pages deployment `https://d484e9ed.ispeakerreact-5u6.pages.dev` are live. The canonical Pages URL returns HTTP 200.
 - Live browser check confirms the A1 → C1 track is visible and the UI has no horizontal overflow at 375, 768 or 1440 CSS px. No secret/token values were added to source or docs.
 - GitHub `main` readback is synchronized at `7528163`; repository API confirms `push=true`.
+
+## English App transcript matching and review release (2026-08-21)
+
+- Applied remote D1 migration `0005_progress_matching.sql` after local validation. `turns.phrase_match_score`, `matched_practices`, `next_review_at` and review indexing are live.
+- `/api/users/:id/progress` now counts only transcript matches at F1 `>= 0.55` and returns `dueReviewCount`; review intervals are 1/3/7/14 days. Synthetic production progress readback passed and all synthetic rows were deleted afterward.
+- Worker `english-app-api` version `daeb7d5c-2157-4223-97d3-5c2b57484d60` is live. Health, curriculum, CEFR and progress API probes pass; no migration is pending.
+- Local verification: UI `38/38`, API `20/20`, web/API builds and migration checks pass. Real iPhone Safari microphone/audio remains the only open manual acceptance gate.

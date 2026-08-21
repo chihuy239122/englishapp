@@ -36,10 +36,10 @@ describe("API Client", () => {
   it("loads curriculum and learner progress", async () => {
     global.fetch = vi.fn()
       .mockResolvedValueOnce({ ok: true, json: async () => ({ modules: [] }) } as Response)
-      .mockResolvedValueOnce({ ok: true, json: async () => ({ userId: "user_1", modules: [] }) } as Response);
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ userId: "user_1", modules: [], dueReviewCount: 0 }) } as Response);
 
     await expect(apiClient.getCurriculum()).resolves.toEqual({ modules: [] });
-    await expect(apiClient.getUserProgress("user_1")).resolves.toEqual({ userId: "user_1", modules: [] });
+    await expect(apiClient.getUserProgress("user_1")).resolves.toEqual({ userId: "user_1", modules: [], dueReviewCount: 0 });
     expect(global.fetch).toHaveBeenNthCalledWith(1, "/api/content/curriculum");
     expect(global.fetch).toHaveBeenNthCalledWith(2, "/api/users/user_1/progress");
   });

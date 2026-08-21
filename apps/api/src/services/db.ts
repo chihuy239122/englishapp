@@ -16,6 +16,7 @@ export function rowToTurn(row: Record<string, unknown>): TurnResponse {
     audioBase64: row.audio_available ? String(row.audio_base64 || "") : "",
     audioAvailable: Boolean(row.audio_available),
     ...(row.phrase_id ? { phraseId: String(row.phrase_id) } : {}),
+    ...(row.phrase_match_score !== null && row.phrase_match_score !== undefined ? { phraseMatchScore: Number(row.phrase_match_score) } : {}),
   };
 }
 

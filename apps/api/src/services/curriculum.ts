@@ -214,7 +214,7 @@ export async function getUserProgress(db: ApiEnv["Bindings"]["DB"], userId: stri
     SELECT m.id AS module_id, m.title AS module_title, m.module_order,
       l.id AS lesson_id, l.title AS lesson_title, l.lesson_order,
       COUNT(lp.phrase_id) AS phrase_count,
-      COUNT(DISTINCT CASE WHEN up.times_practiced > 0 THEN lp.phrase_id END) AS practiced_phrases,
+      COUNT(DISTINCT CASE WHEN up.matched_practices > 0 THEN lp.phrase_id END) AS practiced_phrases,
       COUNT(DISTINCT CASE WHEN up.mastered = 1 THEN lp.phrase_id END) AS mastered_phrases,
       COALESCE(SUM(up.times_practiced), 0) AS practice_count
     FROM content_modules m
@@ -226,4 +226,9 @@ export async function getUserProgress(db: ApiEnv["Bindings"]["DB"], userId: stri
   `;
   const result = await db.prepare(query).bind(userId).all<ProgressRow>();
   return mapProgressRows(result.results);
+}
+
+export async function getDueReviewCount(db: ApiEnv["Bindings"]["DB"], userId: string, now: number): Promise<number> {
+  const row = await db.prepare("SELECT COUNT(*) AS due_count FROM user_progress WHERE user_id = ? AND next_review_at IS NOT NULL AND next_review_at <= ?").bind(userId, now).first<{ due_count: number }>();
+  return Number(row?.due_count || 0);
 }

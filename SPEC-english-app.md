@@ -187,6 +187,8 @@ Error stages: `AUDIO_UPLOAD`, `STT`, `LLM_GEN`, `TTS_GEN`, `PERSISTENCE`. Error 
 - `GET /api/users/:id/progress` trả tiến trình theo module/bài, số câu đã luyện, số câu mastered, phần trăm hoàn thành và trạng thái mở khóa tuần tự.
 - Màn hình chính truyền context từ iSpeaker/lesson vào session, hiển thị câu mục tiêu khi ghi âm và chỉ đọc dữ liệu lộ trình từ Worker; không tạo bản sao nội dung trong UI.
 - `GET /api/content/levels` trả ngân hàng CEFR A1–C1 bổ sung gồm level, unit, vocabulary IPA và sentence examples; dữ liệu dùng namespace riêng để không xung đột với progress phrase MVP.
+- `turns.phrase_match_score` dùng token overlap F1 nhẹ để xác định transcript có khớp câu mục tiêu; không tuyên bố chấm điểm phát âm waveform. Chỉ transcript đạt ngưỡng 0.55 mới tăng `matched_practices` và góp phần hoàn thành bài.
+- `user_progress.next_review_at` tạo lịch ôn đơn giản 1/3/7/14 ngày theo số lần khớp; `dueReviewCount` được trả cùng progress để UI nhắc câu cần ôn.
 
 ## 6. Prompt templates theo persona/level
 

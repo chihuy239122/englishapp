@@ -179,6 +179,7 @@ export interface ModuleProgress {
 export interface UserProgressResponse {
   userId: string;
   modules: ModuleProgress[];
+  dueReviewCount: number;
 }
 
 export type UIState =

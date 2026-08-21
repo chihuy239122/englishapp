@@ -15,6 +15,7 @@ export interface TurnResponse {
   audioBase64: string;
   audioAvailable: boolean;
   phraseId?: string;
+  phraseMatchScore?: number;
 }
 
 export interface TranscribeResponse {
@@ -132,4 +133,5 @@ export interface ModuleProgress {
 export interface UserProgressResponse {
   userId: string;
   modules: ModuleProgress[];
+  dueReviewCount: number;
 }

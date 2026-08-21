@@ -200,3 +200,10 @@
 - Worker version `d4212dde-9880-40e6-b876-a6e2250ff50f` and Pages deployment `https://d484e9ed.ispeakerreact-5u6.pages.dev` are live. Canonical Pages returns HTTP 200.
 - Live browser verification after the CEFR deploy: A1–C1 cards render, 5 cards are present, and no horizontal overflow at 375/768/1440 CSS widths.
 - GitHub `main` is synchronized at commit `7528163`; API readback confirms `push=true` and no secret env file is tracked.
+
+## English App transcript matching and review release (2026-08-21)
+
+- Added `migrations/0005_progress_matching.sql`: `turns.phrase_match_score`, `user_progress.matched_practices`, `next_review_at`, and a review index. Progress now counts only transcript matches at F1 threshold `0.55`; no waveform pronunciation score is claimed.
+- The Worker schedules lightweight review intervals of 1/3/7/14 days and returns `dueReviewCount` from `/api/users/:id/progress`. A production synthetic learner test returned the expected `1/8` phrase progress, `13%` lesson completion and one due review, then was fully deleted and read back as zero.
+- Local verification: UI `38/38`, API `20/20`, web/API builds, local and remote migration apply pass. Worker `daeb7d5c-2157-4223-97d3-5c2b57484d60` is live; health, curriculum, levels and progress endpoints return 200.
+- Real iPhone Safari microphone/audio acceptance remains the only manual device gate; all desktop responsive checks remain green.

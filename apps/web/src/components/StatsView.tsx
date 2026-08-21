@@ -81,7 +81,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ userId }) => {
               <section className="learning-progress-section" aria-labelledby="learning-progress-heading">
                 <div className="progress-section-header">
                   <div><h3 id="learning-progress-heading">Tiến trình lộ trình</h3><p>Theo dõi số câu đã luyện và bài đã mở khóa.</p></div>
-                  <strong>{progress?.modules.reduce((sum, module) => sum + module.lessons.filter((lesson) => lesson.completionPercent > 0).length, 0) ?? 0} bài đang học</strong>
+                  <strong>{progress?.dueReviewCount ?? 0} câu cần ôn</strong>
                 </div>
                 <div className="progress-module-list">
                   {(progress?.modules ?? []).map((module) => (

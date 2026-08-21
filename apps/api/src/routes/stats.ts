@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import type { ApiEnv } from "../index";
 import { errorResponse } from "../lib/errors";
-import { getUserProgress } from "../services/curriculum";
+import { getDueReviewCount, getUserProgress } from "../services/curriculum";
+import { nowSeconds } from "../lib/ids";
 
 export const statsRoutes = new Hono<ApiEnv>();
 
@@ -19,7 +20,7 @@ statsRoutes.get("/api/users/:id/stats", async (c) => {
 statsRoutes.get("/api/users/:id/progress", async (c) => {
   try {
     const userId = c.req.param("id");
-    return c.json({ userId, modules: await getUserProgress(c.env.DB, userId) });
+    return c.json({ userId, modules: await getUserProgress(c.env.DB, userId), dueReviewCount: await getDueReviewCount(c.env.DB, userId, nowSeconds()) });
   } catch (error) {
     return errorResponse(error);
   }

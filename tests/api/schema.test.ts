@@ -48,4 +48,12 @@ describe("initial D1 schema", () => {
     expect(migration).toContain("A1");
     expect(migration).toContain("C1");
   });
+
+  it("contains transcript matching and spaced-review progress fields", () => {
+    const migration = readFileSync(resolve(process.cwd(), "../../migrations/0005_progress_matching.sql"), "utf8");
+
+    expect(migration).toContain("ALTER TABLE user_progress ADD COLUMN matched_practices");
+    expect(migration).toContain("ALTER TABLE user_progress ADD COLUMN next_review_at");
+    expect(migration).toContain("ALTER TABLE turns ADD COLUMN phrase_match_score");
+  });
 });
