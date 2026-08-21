@@ -199,7 +199,7 @@
 - Added `GET /api/content/levels`; live D1 readback confirms 5 CEFR levels, 15 units, 120 level vocabulary records and 90 sentence examples. The main UI now shows the A1 → C1 track summary (15 unit · 120 từ vựng) while practice/progress remains on the validated lesson phrase contract.
 - Worker version `d4212dde-9880-40e6-b876-a6e2250ff50f` and Pages deployment `https://d484e9ed.ispeakerreact-5u6.pages.dev` are live. Canonical Pages returns HTTP 200.
 - Live browser verification after the CEFR deploy: A1–C1 cards render, 5 cards are present, and no horizontal overflow at 375/768/1440 CSS widths.
-- GitHub `main` is synchronized at commit `7528163`; API readback confirms `push=true` and no secret env file is tracked.
+- GitHub `main` is synchronized at feature commit `0a20fd1`; API readback confirms `push=true` and no secret env file is tracked.
 
 ## English App transcript matching and review release (2026-08-21)
 
