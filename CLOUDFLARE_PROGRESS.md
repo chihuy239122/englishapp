@@ -339,7 +339,7 @@ wrangler pages deploy . --project-name alex-pro-admin
 - Applied remote D1 migration `0003_curriculum_expansion.sql` after local validation. Readback: 4 modules, 16 lessons, 92 linked phrases (80 new + 12 legacy), 48 IPA vocabulary records, 0 progress rows; Wrangler reports no pending migration.
 - Added Worker routes `/api/content/curriculum` and `/api/users/:id/progress`. Session context now carries module/lesson/phrase IDs, turns persist `phrase_id`, and successful turns upsert learner progress.
 - Worker `english-app-api` version `3d31a5d6-bbd6-4cd5-a906-665ebfc09e84` is live. Pages deployment `https://312da61a.ispeakerreact-5u6.pages.dev` is live; canonical `https://ispeakerreact-5u6.pages.dev` returns HTTP 200.
-- Local verification: UI `38/38`, API `14/14`, web/API builds, local and remote migration apply pass. Live verification: health 200, curriculum/progress API 200, target phrase context preserved from iSpeaker bridge, Statistics renders, and no horizontal overflow at 375/768/1440 CSS widths.
+- Local verification: UI `38/38`, API `16/16`, web/API builds, local and remote migration apply pass. Live verification: health 200, curriculum/progress/CEFR APIs 200, target phrase context preserved from iSpeaker bridge, Statistics renders, and no horizontal overflow at 375/768/1440 CSS widths.
 - No secret/token values were added to source or documentation. Real iPhone Safari microphone/audio acceptance remains the only open acceptance gate.
 
 ## English App CEFR content bank release (2026-08-21)

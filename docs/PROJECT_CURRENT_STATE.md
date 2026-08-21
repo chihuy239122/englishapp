@@ -188,7 +188,7 @@
 - Added `migrations/0003_curriculum_expansion.sql`: 4 learning modules, 16 ordered lessons, 80 original phrase prompts, 48 IPA vocabulary records, backward links for the original 12 topic phrases, session/turn phrase context columns, and `user_progress` persistence.
 - Worker routes now expose `GET /api/content/curriculum` and `GET /api/users/:id/progress`. Successful completed turns upsert phrase practice and mark a phrase mastered after 3 successful practices.
 - Main Practice UI now loads the Worker curriculum, lets the learner select module → lesson → target phrase, shows the target phrase/phonetic hint while recording, and renders module/lesson progress in Statistics. iSpeaker passes selected context into the main app URL and creates context-aware sessions.
-- Local verification: UI `38/38`, API `14/14`, web/API TypeScript builds, local D1 migration apply, and remote D1 migration apply all pass.
+- Local verification: UI `38/38`, API `16/16`, web/API TypeScript builds, local D1 migration apply, and remote D1 migration apply all pass.
 - Cloudflare preflight: account `0af62f8ed73f84c95453102139345d6f` and harmless remote `SELECT 1` pass. Remote D1 readback: 4 modules, 16 lessons, 92 linked phrases, 48 vocabulary entries, 0 progress rows; no migrations pending.
 - Production: Worker `english-app-api` version `3d31a5d6-bbd6-4cd5-a906-665ebfc09e84`; Pages deployment `https://312da61a.ispeakerreact-5u6.pages.dev`; canonical URLs return HTTP 200.
 - Live browser verification passed at 375, 768 and 1440 CSS widths with no horizontal overflow; curriculum loaded, iSpeaker phrase → bridge → main app context preserved, target phrase displayed, and Statistics progress route rendered. Real iPhone Safari microphone/audio acceptance remains open.
