@@ -348,3 +348,4 @@ wrangler pages deploy . --project-name alex-pro-admin
 - Added and deployed `GET /api/content/levels`. Remote readback: 5 levels, 15 units, 120 level vocabulary records and 90 sentence examples; migration ledger has no pending entries.
 - Worker `english-app-api` version `d4212dde-9880-40e6-b876-a6e2250ff50f` and Pages deployment `https://d484e9ed.ispeakerreact-5u6.pages.dev` are live. The canonical Pages URL returns HTTP 200.
 - Live browser check confirms the A1 → C1 track is visible and the UI has no horizontal overflow at 375, 768 or 1440 CSS px. No secret/token values were added to source or docs.
+- GitHub `main` readback is synchronized at `acddd219feeba47105712a44b64019ab671fb4f3`; repository API confirms `push=true`.
